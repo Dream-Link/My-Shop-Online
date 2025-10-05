@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>स्मार्ट स्टोर मैनेजर</title>
-    
+     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" id="theme-color-meta" content="#007AFF"/>
     <link rel="apple-touch-icon" href="https://placehold.co/192x192/007AFF/FFFFFF?text=SSM">
     
@@ -661,6 +661,19 @@
     function showCustomerSuggestions() { const input = document.getElementById('customerName'); const suggestionsDiv = document.getElementById('customerNameSuggestions'); const value = input.value.toLowerCase(); if (!value) { suggestionsDiv.classList.add('hidden'); return; } const uniqueNames = [...new Set(billHistory.map(bill => bill.customerName.trim()).filter(name => name))]; const filteredNames = uniqueNames.filter(name => name.toLowerCase().includes(value)).slice(0, 5); if (filteredNames.length > 0) { suggestionsDiv.innerHTML = filteredNames.map(name => `<div class="p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" onclick="selectCustomerName('${name}')">${name}</div>` ).join(''); suggestionsDiv.classList.remove('hidden'); } else { suggestionsDiv.classList.add('hidden'); } }
     function selectCustomerName(name) { document.getElementById('customerName').value = name; document.getElementById('customerNameSuggestions').classList.add('hidden'); }
 </script>
+     <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
  
 </body>
 </html>
